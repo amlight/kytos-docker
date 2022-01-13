@@ -14,6 +14,9 @@ ARG branch_mef_eline=master
 ARG branch_maintenance=master
 ARG branch_coloring=master
 ARG branch_sdntrace=master
+ARG branch_scheduler=master
+ARG branch_flow_stats=master
+ARG branch_sdntrace_cp=master
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	python3-setuptools patch python3-pip iproute2 procps curl git-core \
@@ -43,7 +46,10 @@ RUN python3 -m pip install -e git+https://github.com/kytos-ng/storehouse@${branc
  && python3 -m pip install -e git+https://github.com/kytos-ng/mef_eline@${branch_mef_eline}#egg=kytos-mef_eline \
  && python3 -m pip install -e git+https://github.com/kytos-ng/maintenance@${branch_maintenance}#egg=kytos-maintenance \
  && python3 -m pip install -e git+https://github.com/amlight/coloring@${branch_coloring}#egg=amlight-coloring \
- && python3 -m pip install -e git+https://github.com/amlight/sdntrace@${branch_sdntrace}#egg=amlight-sdntrace
+ && python3 -m pip install -e git+https://github.com/amlight/sdntrace@${branch_sdntrace}#egg=amlight-sdntrace \
+ && python3 -m pip install -e git+https://github.com/amlight/scheduler@${branch_scheduler}#egg=amlight-scheduler \
+ && python3 -m pip install -e git+https://github.com/amlight/flow_stats@${branch_flow_stats}#egg=amlight-flow_stats \
+ && python3 -m pip install -e git+https://github.com/amlight/sdntrace_cp@${branch_sdntrace_cp}#egg=amlight-sdntrace_cp
 
 COPY ./apply-patches.sh  /tmp/
 COPY ./patches /tmp/patches

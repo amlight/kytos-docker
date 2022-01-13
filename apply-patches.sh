@@ -19,8 +19,9 @@ cd $ORIG_DIR
 for NAPP in $(ls -1 patches/napps/); do
 	echo $NAPP
 	NAPP_DIR=$(python3 -m pip show $NAPP | grep Location | awk '{print $NF}')
+	test -z "$NAPP_DIR" && NAPP_DIR=/src/$(echo $NAPP | tr '_' '-')
 	cd $NAPP_DIR
-	for PATCH in $(find $ORIG_DIR/patches/napps/$NAPP/ -type f -name '*.patch'); do
+	for PATCH in $(find $ORIG_DIR/patches/napps/$NAPP/ -type f -name '*.patch' | sort); do
 		echo $PATCH
 		$PATCH_BIN -p1 < $PATCH
 	done
