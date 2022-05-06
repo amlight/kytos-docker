@@ -51,10 +51,12 @@ RUN python3 -m pip install -e git+https://github.com/kytos-ng/storehouse@${branc
  && python3 -m pip install -e git+https://github.com/amlight/sdntrace_cp@${branch_sdntrace_cp}#egg=amlight-sdntrace_cp
 
 # end-to-end python related dependencies
+# pymongo and requests resolve to the same version on kytos and NApps
 RUN python3 -m pip install pytest-timeout==2.0.2 \
  && python3 -m pip install pytest==6.2.5 \
  && python3 -m pip install mock==4.0.3 \
- && python3 -m pip install requests # resolve to same version as NApps
+ && python3 -m pip install pymongo \
+ && python3 -m pip install requests
 
 COPY ./apply-patches.sh  /tmp/
 COPY ./patches /tmp/patches
