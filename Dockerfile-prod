@@ -4,7 +4,6 @@ MAINTAINER Italo Valcy <italo@amlight.net>
 ARG branch_python_openflow=master
 ARG branch_kytos_utils=master
 ARG branch_kytos=master
-ARG branch_storehouse=master
 ARG branch_of_core=master
 ARG branch_flow_manager=master
 ARG branch_topology=master
@@ -37,8 +36,7 @@ COPY logging.ini /etc/kytos/
 RUN sed -i "s/XXXJWTSECRETXXX/$(python3 -c 'import secrets; print(secrets.token_hex(16))')/g" /etc/kytos/kytos.conf
 RUN mkdir /var/log/kytos && touch /var/log/kytos/kytos-error.log /var/log/kytos/kytos.log
 
-RUN python3 -m pip install -e git+https://github.com/kytos-ng/storehouse@${branch_storehouse}#egg=kytos-storehouse \
- && python3 -m pip install -e git+https://github.com/kytos-ng/of_core@${branch_of_core}#egg=kytos-of_core \
+RUN python3 -m pip install -e git+https://github.com/kytos-ng/of_core@${branch_of_core}#egg=kytos-of_core \
  && python3 -m pip install -e git+https://github.com/kytos-ng/flow_manager@${branch_flow_manager}#egg=kytos-flow_manager \
  && python3 -m pip install -e git+https://github.com/kytos-ng/topology@${branch_topology}#egg=kytos-topology \
  && python3 -m pip install -e git+https://github.com/kytos-ng/of_lldp@${branch_of_lldp}#egg=kytos-of_lldp \

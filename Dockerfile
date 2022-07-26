@@ -4,7 +4,6 @@ MAINTAINER Italo Valcy <italovalcy@gmail.com>
 ARG branch_python_openflow=master
 ARG branch_kytos_utils=master
 ARG branch_kytos=master
-ARG branch_storehouse=master
 ARG branch_of_core=master
 ARG branch_flow_manager=master
 ARG branch_topology=master
@@ -36,8 +35,7 @@ RUN python3 -m pip install https://github.com/kytos-ng/python-openflow/archive/$
  && python3 -m pip install https://github.com/kytos-ng/kytos-utils/archive/${branch_kytos_utils}.zip \
  && python3 -m pip install https://github.com/kytos-ng/kytos/archive/${branch_kytos}.zip
 
-RUN python3 -m pip install -e git+https://github.com/kytos-ng/storehouse@${branch_storehouse}#egg=kytos-storehouse \
- && python3 -m pip install -e git+https://github.com/kytos-ng/of_core@${branch_of_core}#egg=kytos-of_core \
+RUN python3 -m pip install -e git+https://github.com/kytos-ng/of_core@${branch_of_core}#egg=kytos-of_core \
  && python3 -m pip install -e git+https://github.com/kytos-ng/flow_manager@${branch_flow_manager}#egg=kytos-flow_manager \
  && python3 -m pip install -e git+https://github.com/kytos-ng/topology@${branch_topology}#egg=kytos-topology \
  && python3 -m pip install -e git+https://github.com/kytos-ng/of_lldp@${branch_of_lldp}#egg=kytos-of_lldp \
