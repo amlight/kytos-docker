@@ -39,12 +39,12 @@ RUN python3 -m pip install -e git+https://github.com/kytos-ng/of_core@${branch_o
  && python3 -m pip install -e git+https://github.com/kytos-ng/topology@${branch_topology}#egg=kytos-topology \
  && python3 -m pip install -e git+https://github.com/kytos-ng/of_lldp@${branch_of_lldp}#egg=kytos-of_lldp \
  && python3 -m pip install -e git+https://github.com/kytos-ng/pathfinder@${branch_pathfinder}#egg=kytos-pathfinder \
- && python3 -m pip install -e git+https://github.com/kytos-ng/mef_eline@${branch_mef_eline}#egg=kytos-mef_eline \
  && python3 -m pip install -e git+https://github.com/kytos-ng/maintenance@${branch_maintenance}#egg=kytos-maintenance \
  && python3 -m pip install -e git+https://github.com/kytos-ng/coloring@${branch_coloring}#egg=amlight-coloring \
  && python3 -m pip install -e git+https://github.com/kytos-ng/sdntrace@${branch_sdntrace}#egg=amlight-sdntrace \
  && python3 -m pip install -e git+https://github.com/kytos-ng/flow_stats@${branch_flow_stats}#egg=amlight-flow_stats \
- && python3 -m pip install -e git+https://github.com/kytos-ng/sdntrace_cp@${branch_sdntrace_cp}#egg=amlight-sdntrace_cp
+ && python3 -m pip install -e git+https://github.com/kytos-ng/sdntrace_cp@${branch_sdntrace_cp}#egg=amlight-sdntrace_cp \
+ && python3 -m pip install -e git+https://github.com/kytos-ng/mef_eline@${branch_mef_eline}#egg=kytos-mef_eline
 
 # end-to-end python related dependencies
 # pymongo and requests resolve to the same version on kytos and NApps
