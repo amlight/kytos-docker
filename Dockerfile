@@ -50,6 +50,7 @@ RUN python3 -m pip install -e git+https://github.com/kytos-ng/of_core@${branch_o
 # pymongo and requests resolve to the same version on kytos and NApps
 RUN python3 -m pip install pytest-timeout==2.0.2 \
  && python3 -m pip install pytest==6.2.5 \
+ && python3 -m pip install pytest-rerunfailures==10.2 \
  && python3 -m pip install mock==4.0.3 \
  && python3 -m pip install pymongo \
  && python3 -m pip install requests
