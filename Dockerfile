@@ -15,6 +15,7 @@ ARG branch_coloring=master
 ARG branch_sdntrace=master
 ARG branch_flow_stats=master
 ARG branch_sdntrace_cp=master
+ARG branch_of_multi_table=master
 # USAGE: ... --build-arg release_ui=download/2022.2.0 ...
 ARG release_ui=latest/download
 
@@ -47,6 +48,7 @@ RUN python3 -m pip install -e git+https://github.com/kytos-ng/of_core@${branch_o
  && python3 -m pip install -e git+https://github.com/kytos-ng/flow_stats@${branch_flow_stats}#egg=amlight-flow_stats \
  && python3 -m pip install -e git+https://github.com/kytos-ng/sdntrace_cp@${branch_sdntrace_cp}#egg=amlight-sdntrace_cp \
  && python3 -m pip install -e git+https://github.com/kytos-ng/mef_eline@${branch_mef_eline}#egg=kytos-mef_eline \
+ && python3 -m pip install -e git+https://github.com/kytos-ng/of_multi_table@${branch_of_multi_table}#egg=kytos-of_multi_table \
  && curl -L -o /tmp/latest.zip https://github.com/kytos-ng/ui/releases/${release_ui}/latest.zip \
  && python3 -m zipfile -e /tmp/latest.zip  /usr/local/lib/python3.9/dist-packages/kytos/web-ui \
  && rm -f /tmp/latest.zip
