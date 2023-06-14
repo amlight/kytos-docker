@@ -14,8 +14,8 @@ ARG branch_maintenance=master
 ARG branch_coloring=master
 ARG branch_sdntrace=master
 ARG branch_sdntrace_cp=master
-ARG branch_of_multi_table=master
 ARG branch_kytos_stats=master
+ARG branch_of_multi_table=master
 # USAGE: ... --build-arg release_ui=download/2022.2.0 ...
 ARG release_ui=latest/download
 
