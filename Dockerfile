@@ -1,21 +1,21 @@
 FROM debian:bookworm-slim
 MAINTAINER Italo Valcy <italovalcy@gmail.com>
 
-ARG branch_python_openflow=upgrade/python
-ARG branch_kytos_utils=upgrade/python
-ARG branch_kytos=upgrade/python
-ARG branch_of_core=upgrade/python
-ARG branch_flow_manager=upgrade/python
-ARG branch_topology=upgrade/python
-ARG branch_of_lldp=upgrade/python
-ARG branch_pathfinder=upgrade/python
-ARG branch_mef_eline=upgrade/python
-ARG branch_maintenance=upgrade/python
-ARG branch_coloring=upgrade/python
-ARG branch_sdntrace=upgrade/python
-ARG branch_kytos_stats=upgrade/python
-ARG branch_sdntrace_cp=upgrade/python
-ARG branch_of_multi_table=upgrade/python
+ARG branch_python_openflow=master
+ARG branch_kytos_utils=master
+ARG branch_kytos=master
+ARG branch_of_core=master
+ARG branch_flow_manager=master
+ARG branch_topology=master
+ARG branch_of_lldp=master
+ARG branch_pathfinder=master
+ARG branch_mef_eline=master
+ARG branch_maintenance=master
+ARG branch_coloring=master
+ARG branch_sdntrace=master
+ARG branch_kytos_stats=master
+ARG branch_sdntrace_cp=master
+ARG branch_of_multi_table=master
 # USAGE: ... --build-arg release_ui=download/2022.2.0 ...
 ARG release_ui=latest/download
 
