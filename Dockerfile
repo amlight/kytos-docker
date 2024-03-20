@@ -56,7 +56,7 @@ RUN python3 -m pip install -e git+https://github.com/kytos-ng/of_core@${branch_o
 # end-to-end python related dependencies
 # pymongo and requests resolve to the same version on kytos and NApps
 RUN python3 -m pip install pytest-timeout==2.2.0 \
- && python3 -m pip install pytest==7.2.1 \
+ && python3 -m pip install pytest==8.1.1 \
  && python3 -m pip install pytest-rerunfailures==13.0 \
  && python3 -m pip install mock==5.1.0 \
  && python3 -m pip install pymongo \
