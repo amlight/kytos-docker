@@ -72,6 +72,5 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 EXPOSE 6653
 EXPOSE 8181
-EXPOSE 5000
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
