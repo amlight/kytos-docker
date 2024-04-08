@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 MAINTAINER Italo Valcy <italo@amlight.net>
 
 ARG branch_python_openflow=master
@@ -19,14 +19,15 @@ ARG branch_sdntrace_cp=master
 ARG release_ui=latest/download
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-	python3-setuptools patch python3-pip iproute2 procps curl git-core \
+	python3-setuptools patch python3-pip orphan-sysvinit-scripts iproute2 procps curl git-core \
         vim jq less tmux nginx \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
+RUN rm /usr/lib/python3.11/EXTERNALLY-MANAGED
 
-RUN python3 -m pip install setuptools==60.2.0
-RUN python3 -m pip install pip==21.3.1
-RUN python3 -m pip install wheel==0.37
+RUN python3 -m pip install setuptools==69.1.1
+RUN python3 -m pip install pip==24.0
+RUN python3 -m pip install wheel==0.42.0
 
 RUN python3 -m pip install https://github.com/kytos-ng/python-openflow/archive/${branch_python_openflow}.zip \
  && python3 -m pip install https://github.com/kytos-ng/kytos-utils/archive/${branch_kytos_utils}.zip \
@@ -49,7 +50,7 @@ RUN python3 -m pip install -e git+https://github.com/kytos-ng/of_core@${branch_o
  && python3 -m pip install -e git+https://github.com/kytos-ng/sdntrace_cp@${branch_sdntrace_cp}#egg=amlight-sdntrace_cp \
  && python3 -m pip install -e git+https://github.com/kytos-ng/mef_eline@${branch_mef_eline}#egg=kytos-mef_eline \
  && curl -L -o /tmp/latest.zip https://github.com/kytos-ng/ui/releases/${release_ui}/latest.zip \
- && python3 -m zipfile -e /tmp/latest.zip  /usr/local/lib/python3.9/dist-packages/kytos/web-ui \
+ && python3 -m zipfile -e /tmp/latest.zip  /usr/local/lib/python3.11/dist-packages/kytos/web-ui \
  && rm -f /tmp/latest.zip
 
 COPY ./apply-patches.sh  /tmp/
