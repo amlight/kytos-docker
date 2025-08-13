@@ -16,7 +16,7 @@ ARG branch_sdntrace=master
 ARG branch_kytos_stats=master
 ARG branch_sdntrace_cp=master
 ARG branch_of_multi_table=master
-ARG branch_kafka_events=main
+ARG branch_kafka_events=master
 # USAGE: ... --build-arg release_ui=download/2022.2.0 ...
 ARG release_ui=latest/download
 
@@ -63,7 +63,6 @@ RUN python3 -m pip install pytest-timeout==2.2.0 \
  && python3 -m pip install pytest-rerunfailures==13.0 \
  && python3 -m pip install mock==5.1.0 \
  && python3 -m pip install pymongo \
- && python3 -m pip install aiokafka==0.12.0 \
  && python3 -m pip install requests
 
 COPY ./apply-patches.sh  /tmp/
