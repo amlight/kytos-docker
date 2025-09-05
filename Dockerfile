@@ -16,6 +16,7 @@ ARG branch_sdntrace=master
 ARG branch_kytos_stats=master
 ARG branch_sdntrace_cp=master
 ARG branch_of_multi_table=master
+ARG branch_kafka_events=master
 # USAGE: ... --build-arg release_ui=download/2022.2.0 ...
 ARG release_ui=latest/download
 
@@ -49,6 +50,7 @@ RUN python3 -m pip install -e git+https://github.com/kytos-ng/of_core@${branch_o
  && python3 -m pip install -e git+https://github.com/kytos-ng/sdntrace_cp@${branch_sdntrace_cp}#egg=amlight-sdntrace_cp \
  && python3 -m pip install -e git+https://github.com/kytos-ng/mef_eline@${branch_mef_eline}#egg=kytos-mef_eline \
  && python3 -m pip install -e git+https://github.com/kytos-ng/of_multi_table@${branch_of_multi_table}#egg=kytos-of_multi_table \
+ && python3 -m pip install -e git+https://github.com/kytos-ng/kafka_events@${branch_kafka_events}#egg=kytos-kafka_events \
  && curl -L -o /tmp/latest.zip https://github.com/kytos-ng/ui/releases/${release_ui}/latest.zip \
  && python3 -m zipfile -e /tmp/latest.zip  /usr/local/lib/python3.11/dist-packages/kytos/web-ui \
  && rm -f /tmp/latest.zip
@@ -57,6 +59,7 @@ RUN python3 -m pip install -e git+https://github.com/kytos-ng/of_core@${branch_o
 # pymongo and requests resolve to the same version on kytos and NApps
 RUN python3 -m pip install pytest-timeout==2.2.0 \
  && python3 -m pip install pytest==8.1.1 \
+ && python3 -m pip install pytest-asyncio==1.1.0 \
  && python3 -m pip install pytest-rerunfailures==13.0 \
  && python3 -m pip install mock==5.1.0 \
  && python3 -m pip install pymongo \
