@@ -9,7 +9,7 @@ RUN apk add --no-cache git
 
 RUN git clone -b ${branch_ui} --single-branch https://github.com/kytos-ng/ui \
  && cd ui \
- && sed -i 's/"version": "2025.1.0"/"version": "Commit-'$(git log -1 --pretty=format:%h)'"/g' ./package.json \
+ && sed -ri 's/"version": "[^"]+"/"version": "Commit-'$(git log -1 --pretty=format:%h)'"/g' ./package.json \
  && npm install \
  && npm run build
 
