@@ -1,3 +1,19 @@
+# Stage 1: build Kytos UI
+FROM node:lts-alpine as ui-builder
+
+ARG branch_ui=master
+
+WORKDIR /app
+
+RUN apk add --no-cache git
+
+RUN git clone -b ${branch_ui} --single-branch https://github.com/kytos-ng/ui \
+ && cd ui \
+ && sed -i 's/"version": "2025.1.0"/"version": "Commit-'$(git log -1 --pretty=format:%h)'"/g' ./package.json \
+ && npm install \
+ && npm run build
+
+# Stage 2: build Kytos
 FROM debian:bookworm-slim
 MAINTAINER Italo Valcy <italovalcy@gmail.com>
 
@@ -17,8 +33,6 @@ ARG branch_kytos_stats=master
 ARG branch_sdntrace_cp=master
 ARG branch_of_multi_table=master
 ARG branch_kafka_events=master
-# USAGE: ... --build-arg release_ui=download/2022.2.0 ...
-ARG release_ui=latest/download
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	python3-setuptools python3-pip orphan-sysvinit-scripts rsyslog iproute2 procps curl jq git-core patch \
@@ -50,10 +64,9 @@ RUN python3 -m pip install -e git+https://github.com/kytos-ng/of_core@${branch_o
  && python3 -m pip install -e git+https://github.com/kytos-ng/sdntrace_cp@${branch_sdntrace_cp}#egg=amlight-sdntrace_cp \
  && python3 -m pip install -e git+https://github.com/kytos-ng/mef_eline@${branch_mef_eline}#egg=kytos-mef_eline \
  && python3 -m pip install -e git+https://github.com/kytos-ng/of_multi_table@${branch_of_multi_table}#egg=kytos-of_multi_table \
- && python3 -m pip install -e git+https://github.com/kytos-ng/kafka_events@${branch_kafka_events}#egg=kytos-kafka_events \
- && curl -L -o /tmp/latest.zip https://github.com/kytos-ng/ui/releases/${release_ui}/latest.zip \
- && python3 -m zipfile -e /tmp/latest.zip  /usr/local/lib/python3.11/dist-packages/kytos/web-ui \
- && rm -f /tmp/latest.zip
+ && python3 -m pip install -e git+https://github.com/kytos-ng/kafka_events@${branch_kafka_events}#egg=kytos-kafka_events
+
+COPY --from=ui-builder /app/ui/web-ui /usr/local/lib/python3.11/dist-packages/kytos/web-ui
 
 # end-to-end python related dependencies
 # pymongo and requests resolve to the same version on kytos and NApps
