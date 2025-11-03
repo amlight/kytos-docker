@@ -2,6 +2,7 @@
 FROM node:lts-alpine as ui-builder
 
 ARG branch_ui=master
+ARG ui_commit_version_tag=yes
 
 WORKDIR /app
 
@@ -9,7 +10,7 @@ RUN apk add --no-cache git
 
 RUN git clone -b ${branch_ui} --single-branch https://github.com/kytos-ng/ui \
  && cd ui \
- && sed -ri 's/"version": "[^"]+"/"version": "Commit-'$(git log -1 --pretty=format:%h)'"/g' ./package.json \
+ && if [ "$ui_commit_version_tag" == "yes" ]; then sed -ri 's/"version": "[^"]+"/"version": "Commit-'$(git log -1 --pretty=format:%h)'"/g' ./package.json; fi \
  && npm install \
  && npm run build
 
