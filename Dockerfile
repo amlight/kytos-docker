@@ -71,7 +71,7 @@ RUN python3 -m pip install -e git+https://github.com/kytos-ng/of_core@${branch_o
  && python3 -m pip install -e git+https://github.com/kytos-ng/mef_eline@${branch_mef_eline}#egg=kytos-mef_eline \
  && python3 -m pip install -e git+https://github.com/kytos-ng/of_multi_table@${branch_of_multi_table}#egg=kytos-of_multi_table \
  && python3 -m pip install -e git+https://github.com/kytos-ng/kafka_events@${branch_kafka_events}#egg=kytos-kafka_events \
- && python3 -m pip install -e git+https://github.com/kytos-ng/noviflow@${branch_of_noviflow}#egg=kytos-noviflow \
+ && python3 -m pip install -e git+https://github.com/kytos-ng/noviflow@${branch_noviflow}#egg=kytos-noviflow \
  && python3 -m pip install -e git+https://github.com/kytos-ng/telemetry_int@${branch_telemetry_int}#egg=kytos-telemetry_int
 
 COPY --from=ui-builder /app/ui/web-ui /usr/local/lib/python3.11/dist-packages/kytos/web-ui
