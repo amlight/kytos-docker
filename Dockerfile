@@ -39,7 +39,7 @@ ARG branch_telemetry_int=master
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	python3-setuptools python3-pip orphan-sysvinit-scripts rsyslog iproute2 procps curl jq git-core patch \
-        openvswitch-switch mininet iputils-ping vim tmux less python3-paramiko openssh-client \
+        openvswitch-switch mininet iputils-ping vim tmux less python3-paramiko openssh-client tini \
 	&& cd /tmp \
 	&& curl -LO https://github.com/amlight/ovs-ext-novi/releases/download/ovs-3.1.0-deb12/openvswitch-common_3.1.0-2+deb12u1.1_amd64.deb \
 	&& dpkg -i *.deb \
@@ -97,4 +97,4 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 EXPOSE 6653
 EXPOSE 8181
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/tini", "--", "/docker-entrypoint.sh"]
