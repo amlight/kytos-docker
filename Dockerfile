@@ -42,6 +42,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         openvswitch-switch mininet iputils-ping vim tmux less python3-paramiko openssh-client tini python3-scapy tcpdump \
 	&& cd /tmp \
 	&& curl -LO https://github.com/amlight/ovs-ext-novi/releases/download/ovs-3.1.0-deb12/openvswitch-common_3.1.0-2+deb12u1.1_amd64.deb \
+        && curl -LO https://github.com/amlight/ovs-ext-novi/releases/download/ovs-3.1.0-deb12/openvswitch-switch_3.1.0-2+deb12u1.1_amd64.deb \
+        && curl -LO https://github.com/amlight/ovs-ext-novi/releases/download/ovs-3.1.0-deb12/python3-openvswitch_3.1.0-2+deb12u1.1_amd64.deb \
 	&& dpkg -i *.deb \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/* /tmp/*
