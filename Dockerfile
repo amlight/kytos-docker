@@ -34,12 +34,19 @@ ARG branch_kytos_stats=master
 ARG branch_sdntrace_cp=master
 ARG branch_of_multi_table=master
 ARG branch_kafka_events=master
+ARG branch_noviflow=master
+ARG branch_telemetry_int=master
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
 	python3-setuptools python3-pip orphan-sysvinit-scripts rsyslog iproute2 procps curl jq git-core patch \
-        openvswitch-switch mininet iputils-ping vim tmux less \
+        openvswitch-switch mininet iputils-ping vim tmux less python3-paramiko openssh-client tini python3-scapy tcpdump \
+	&& cd /tmp \
+	&& curl -LO https://github.com/amlight/ovs-ext-novi/releases/download/ovs-3.1.0-deb12/openvswitch-common_3.1.0-2+deb12u1.1_amd64.deb \
+        && curl -LO https://github.com/amlight/ovs-ext-novi/releases/download/ovs-3.1.0-deb12/openvswitch-switch_3.1.0-2+deb12u1.1_amd64.deb \
+        && curl -LO https://github.com/amlight/ovs-ext-novi/releases/download/ovs-3.1.0-deb12/python3-openvswitch_3.1.0-2+deb12u1.1_amd64.deb \
+	&& dpkg -i *.deb \
 	&& apt-get clean \
-	&& rm -rf /var/lib/apt/lists/*
+	&& rm -rf /var/lib/apt/lists/* /tmp/*
 RUN rm /usr/lib/python3.11/EXTERNALLY-MANAGED
 RUN sed -i '/imklog/ s/^/#/' /etc/rsyslog.conf
 
@@ -64,6 +71,8 @@ RUN python3 -m pip install -e git+https://github.com/kytos-ng/of_core@${branch_o
  && python3 -m pip install -e git+https://github.com/kytos-ng/kytos_stats@${branch_kytos_stats}#egg=amlight-kytos_stats \
  && python3 -m pip install -e git+https://github.com/kytos-ng/sdntrace_cp@${branch_sdntrace_cp}#egg=amlight-sdntrace_cp \
  && python3 -m pip install -e git+https://github.com/kytos-ng/mef_eline@${branch_mef_eline}#egg=kytos-mef_eline \
+ && python3 -m pip install -e git+https://github.com/kytos-ng/noviflow@${branch_noviflow}#egg=kytos-noviflow \
+ && python3 -m pip install -e git+https://github.com/kytos-ng/telemetry_int@${branch_telemetry_int}#egg=kytos-telemetry_int \
  && python3 -m pip install -e git+https://github.com/kytos-ng/of_multi_table@${branch_of_multi_table}#egg=kytos-of_multi_table \
  && python3 -m pip install -e git+https://github.com/kytos-ng/kafka_events@${branch_kafka_events}#egg=kytos-kafka_events
 
@@ -90,4 +99,4 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 EXPOSE 6653
 EXPOSE 8181
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/tini", "--", "/docker-entrypoint.sh"]
