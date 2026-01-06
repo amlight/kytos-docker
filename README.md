@@ -26,6 +26,8 @@ When running in a CI/CD with environment variables:
 
 ## Usage
 
+**OBS:** please check the notes below related to Kytos-ng dependencies.
+
 After pull or build the image, you can run:
 
 	docker run -d --name kytos -p 8181:8181 -p 6653:6653 amlight/kytos:latest
@@ -34,6 +36,12 @@ You can also run the kytos daemon as the main container process (the default is 
 
 	docker run -d --name kytos -p 8181:8181 -p 6653:6653 -it amlight/kytos:latest /usr/local/bin/kytosd -E -f
 
+The Kytos docker image includes Mininet emulation platform by default. Thus, if you want to run a test topology you can run the following:
+```
+docker run -d --name kytos -v /lib/modules:/lib/modules --privileged amlight/kytos:latest
+docker exec kytos tmux new-session -d -s mn mn --controller=remote --topo=linear,3
+```
+
 Help:
 ```
 prompt$ docker run --rm amlight/kytos:latest --help
@@ -41,4 +49,15 @@ docker run amlight/kytos [options]
     -h, --help                    display help information
     /path/program ARG1 .. ARGn    execute the specfified local program
     --ARG1 .. --ARGn              execute Kytos with these arguments
+```
+
+> [!IMPORTANT]
+> Kytos-ng dependencies
+
+The Kytos-ng docker image depends on some additional software like MongoDB, Elastic Search, Kafka, etc. The very minimal dependency is MongoDB, which guarantee data persistency. We recommend you to use the official docker compose ([here](https://github.com/kytos-ng/kytos/blob/master/docker-compose.yml) and [here](https://github.com/kytos-ng/kytos/blob/master/docker-compose.es.yml)), which includes all those dependencies. An alternative would be running a single container for MongoDB and then link it into Kytos:
+
+```
+docker run -d --name mongo1 mongo:7.0
+docker exec -it mongo1 mongosh --eval 'db.getSiblingDB("k1").createUser({user: "k1", pwd: "k1", roles: [ { role: "dbAdmin", db: "k1" } ]})'
+docker run -d --name kytos1 --link mongo1 -e MONGO_DBNAME=k1 -e MONGO_USERNAME=k1 -e MONGO_PASSWORD=k1 -e MONGO_HOST_SEEDS=mongo1:27017 amlight/kytos:latest
 ```
