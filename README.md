@@ -8,15 +8,15 @@
 
 You can build the docker image by just running:
 
-       docker build -f Dockerfile --no-cache -t amlight/kytos .
+       docker build -f Dockerfile --no-cache --platform linux/amd64 -t amlight/kytos .
 
 You can also use some build arguments to specify which branch should be used on each component (core and Napps):
 
-       docker build -f Dockerfile --build-arg branch_mef_eline=fix/issue_xpto --build-arg branch_kytos_utils=fix/error_foobar -t amlight/kytos .
+       docker build -f Dockerfile --platform linux/amd64 --build-arg branch_mef_eline=fix/issue_xpto --build-arg branch_kytos_utils=fix/error_foobar -t amlight/kytos .
 
 The UI components/files are built along with Kytos components and you can also specify the specific branch to use (defaults to master):
 
-       docker build -f Dockerfile --build-arg branch_ui=release/2025.1.2 -t amlight/kytos .
+       docker build -f Dockerfile --platform linux/amd64 --build-arg branch_ui=release/2025.1.2 -t amlight/kytos .
 
 While building the UI components/files, we overwrite the "version" to display the commit ID used on the build, you can disable this behavior by using `--build-arg ui_commit_version_tag=no` (which will maintain the version as defined on the UI's `package.json` file).
 
