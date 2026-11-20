@@ -86,7 +86,8 @@ RUN python3 -m pip install pytest-timeout==2.2.0 \
  && python3 -m pip install pytest-rerunfailures==13.0 \
  && python3 -m pip install mock==5.1.0 \
  && python3 -m pip install pymongo \
- && python3 -m pip install requests
+ && python3 -m pip install requests \
+ && python3 -m pip install schemathesis==3.39.16
 
 COPY ./apply-patches.sh  /tmp/
 COPY ./patches /tmp/patches
